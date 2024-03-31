@@ -1,6 +1,6 @@
 package com.wancan.samformapi.model;
 
-
+import com.wancan.samformapi.dto.FormDTO;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.data.annotation.CreatedDate;
@@ -9,21 +9,18 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
-@Document(collection = "users")
+@Document(collection = "forms")
 @Builder
-public class UserModel {
+public class FormModel {
 
     @Id
     private String id;
-    private String firstName;
-    private String lastName;
-    private String email;
-    private String username;
-    private String password;
-    private String hashPassword;
-    private String lastOtp;
+    private String userId;
+    private String alias;
+    private List<FormDTO> data;
     @Builder.Default
     private boolean isActive = true;
     @Builder.Default

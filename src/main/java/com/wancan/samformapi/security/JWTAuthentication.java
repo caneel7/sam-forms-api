@@ -28,11 +28,12 @@ public class JWTAuthentication extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        System.out.println("hello");
+        System.out.println(request.getServletPath());
         if(!Arrays.stream(this.urls).toList().contains(request.getServletPath())) {
             String token = getJWTFromToken(request);
             if(StringUtils.hasText(token)){
                 try{
+
                     String id = jwt.parseToken(token).getSubject();
 
                     UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(id,id,null);
@@ -40,17 +41,15 @@ public class JWTAuthentication extends OncePerRequestFilter {
                     authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
                     SecurityContextHolder.getContext().setAuthentication(authenticationToken);
-
                     filterChain.doFilter(request,response);
-
                 }catch (Exception err){
+                    System.out.println("ERROR"+err);
                     response.sendError(HttpStatus.UNAUTHORIZED.value(),"Error");
                 }
             }else{
                 response.sendError(HttpStatus.UNAUTHORIZED.value(),"Error");
             }
         }else {
-            System.out.println("1");
             filterChain.doFilter(request,response);
         }
     }
