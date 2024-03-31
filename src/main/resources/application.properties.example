@@ -1,0 +1,4 @@
+spring.application.name=sam-form-api
+spring.data.mongodb.uri=
+spring.data.mongodb.database=
+jwt.token.secret=

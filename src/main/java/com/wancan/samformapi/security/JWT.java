@@ -3,6 +3,7 @@ import com.wancan.samformapi.model.UserModel;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
@@ -10,6 +11,9 @@ import java.util.Date;
 
 @Component
 public class JWT {
+
+    @Value("${jwt.token.secret}")
+    private String tokenSecret;
 
     public String generateToken(UserModel user){
         String id = user.getId();
@@ -20,14 +24,14 @@ public class JWT {
                 .setSubject(id)
                 .setIssuedAt(now)
                 .setExpiration(expireAt)
-                .signWith(SignatureAlgorithm.HS256,"3I39sUDaLKNljedt6dMiAcj83XEINA1PvCeJhQUsfnr8f8e3Ht3DevVc3Ie6iVAs")
+                .signWith(SignatureAlgorithm.HS256,tokenSecret)
                 .compact();
         return  token;
     }
 
     public Claims parseToken(String token) throws Exception{
         Claims claims = Jwts.parserBuilder()
-                .setSigningKey("3I39sUDaLKNljedt6dMiAcj83XEINA1PvCeJhQUsfnr8f8e3Ht3DevVc3Ie6iVAs")
+                .setSigningKey(tokenSecret)
                 .build()
                 .parseClaimsJws(token)
                 .getBody();
