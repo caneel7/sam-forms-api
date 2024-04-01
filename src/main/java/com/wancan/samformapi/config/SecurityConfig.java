@@ -39,7 +39,7 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth ->
                         auth.dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
-                                .requestMatchers("/user/register","/user/login","/form").permitAll()
+                                .requestMatchers("/user/register","/user/login","/form","/form/submit").permitAll()
                                 .anyRequest().authenticated()
 
                 );

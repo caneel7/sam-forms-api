@@ -4,7 +4,6 @@ import lombok.Builder;
 import lombok.Data;
 
 @Data
-@Builder
 public class FormDTO {
 
     private String type;
@@ -44,5 +43,10 @@ public class FormDTO {
     private class FormValidations{
         private boolean required;
         private String pattern;
+    }
+
+    public class FormResponse{
+        private String label;
+        private String answer;
     }
 }

@@ -24,7 +24,7 @@ public class JWTAuthentication extends OncePerRequestFilter {
     @Autowired
     private CustomUserDetailsService customUserDetailsService;
 
-    private String[] urls = {"/user/register","/user/login","/"};
+    private String[] urls = {"/user/register","/user/login","/","/form/submit"};
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
